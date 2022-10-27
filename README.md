@@ -1,1 +1,1 @@
-# jebac czarnych
+# bazy danych
