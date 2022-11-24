@@ -32,6 +32,61 @@ mysql> INSERT INTO walizka (pojemnosc,id_wlasciciela) Values (20,1);
 
 mysql> INSERT INTO walizka (pojemnosc,id_wlasciciela) Values (20,3);
 
+zad 3
+mysql> create table izba(adres_budynku INTEGER NOT NULL,nazwa_izby VARCHAR(40), metraz INTEGER UNSIGNED, wlasciciel INTEGER, FOREIGN KEY(wlasciciel) references postac(id_postaci) on delete set null, primary key(adres_budynku, nazwa_izby));
+
+mysql> ALTER TABLE izba add kolor_izby VARCHAR(40) default 'czarny' after metraz;
+
+mysql> INSERT INTO izba values(1,'spizarnia',40,default,1);
+
+zad 4
+
+mysql> CREATE TABLE przetwory (id_przetworu INTEGER PRIMARY KEY,rok_produkcji YEAR default (1654),id_wykonawcy INTEGER, foreign key(id_wykonawcy) references postac (id_postaci),zawartosc VARCHAR(40),dodatek VARCHAR(40) default 'chilli',id_konsumenta INTEGER, foreign key (id_konsumenta) references postac(id_postaci));
+
+mysql> INSERT INTO przetwory VALUES('1',null,null,'bigos',DEFAULT,null);
+
+
+zad 5 
+1.
+mysql> INSERT INTO postac VALUES('4','Basa','wiking','1066-03-04','204'),('5','Afrikas','wiking','1066-04-05','307');
+mysql> INSERT INTO postac VALUES('6','Cesti','wiking','1066-06-07','104'),('7','Afrikas','wiking','1066-08-09','357');
+mysql> INSERT INTO postac VALUES('8','Cymraeg','wiking','1066-12-07','670');
+
+2.
+CREATE TABLE statek(nazwa_statku VARCHAR(40) primary key,rodzaj statku enum('towarowy','pasazerski'),data wodowania date, max_ladownosc INTEGER UNSIGNED);
+
+
+3.
+mysql> INSERT INTO statek VALUES('Statek1','towarowy','1999-01-01','40');
+
+mysql>  INSERT INTO statek VALUES('Statek2','pasazerski','2000-01-01','56');
+
+4.mysql> ALTER TABLE postac ADD COLUMN funkcja VARCHAR(40);
+
+5.mysql> UPDATE postac SET funkcja='kapitan' WHERE id_postaci=1;
+
+6.mysql> ALTER TABLE postac ADD COLUMN nazwa_statku VARCHAR(40);
+mysql> ALTER TABLE postac ADD FOREIGN KEY (nazwa_statku) references statek(nazwa_statku);
+
+
+7.mysql> update postac SET nazwa_statku='Statek1' WHERE rodzaj='wiking';
+
+8.mysql> DELETE FROM izba WHERE nazwa_izby='spizarnia';
+
+9.mysql> DROP TABLE izba;
+
+
+LEKCJA 2
+
+zad 1
+a. 
+
+
+
+
+
+
+
 
 
 
