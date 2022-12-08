@@ -1,0 +1,166 @@
+ CREATE TABLE postac(id_postaci INTEGER PRIMARY KEY NOT NULL, nazwa VARCHAR(40), rodzaj ENUM ('wiking', 'ptak', 'kobieta'), data_ur DATE, wiek INTEGER UNSIGNED);
+
+INSERT INTO postac (id_postaci, nazwa) VALUES ('1','Bjorn')
+
+INSERT INTO postac (rodzaj, data_ur, wiek) VALUES ('wiking','2016-04-02',25);
+
+UPDATE postac SET rodzaj='kobieta' WHERE id_postaci='3';
+
+UPDATE postac SET data_ur='1965-10-22' WHERE id_postaci='3';
+
+UPDATE postac SET data_ur='1965-10-22' WHERE id_postaci='3';
+
+mysql> UPDATE postac SET wiek='56' WHERE id_postaci='3';
+
++------------+----------+---------+------------+------+
+| id_postaci | nazwa    | rodzaj  | data_ur    | wiek |
++------------+----------+---------+------------+------+
+|          1 | Bjorn    | wiking  | 1066-02-03 |  956 |
+|          2 | Drozd    | ptak    | 2022-12-22 |    3 |
+|          3 | Tesciowa | kobieta | 1965-10-22 |   56 |
++------------+----------+---------+------------+------+
+
+zad2.
+
+
+
+mysql> CREATE TABLE walizka (id_walizka INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,pojemnosc INTEGER UNSIGNED, kolor ENUM('rozowy','teczowy','zolty'),id_wlasciciela INTEGER,FOREIGN KEY(id_wlasciciela) references postac(id_postaci) on delete cascade);
+
+mysql> alter table walizka alter kolor set default 'rozowy';
+
+mysql> INSERT INTO walizka (pojemnosc,id_wlasciciela) Values (20,1);
+
+mysql> INSERT INTO walizka (pojemnosc,id_wlasciciela) Values (20,3);
+
+zad 3
+mysql> create table izba(adres_budynku INTEGER NOT NULL,nazwa_izby VARCHAR(40), metraz INTEGER UNSIGNED, wlasciciel INTEGER, FOREIGN KEY(wlasciciel) references postac(id_postaci) on delete set null, primary key(adres_budynku, nazwa_izby));
+
+mysql> ALTER TABLE izba add kolor_izby VARCHAR(40) default 'czarny' after metraz;
+
+mysql> INSERT INTO izba values(1,'spizarnia',40,default,1);
+
+zad 4
+
+mysql> CREATE TABLE przetwory (id_przetworu INTEGER PRIMARY KEY,rok_produkcji YEAR default (1654),id_wykonawcy INTEGER, foreign key(id_wykonawcy) references postac (id_postaci),zawartosc VARCHAR(40),dodatek VARCHAR(40) default 'chilli',id_konsumenta INTEGER, foreign key (id_konsumenta) references postac(id_postaci));
+
+mysql> INSERT INTO przetwory VALUES('1',null,null,'bigos',DEFAULT,null);
+
+
+zad 5 
+1.
+mysql> INSERT INTO postac VALUES('4','Basa','wiking','1066-03-04','204'),('5','Afrikas','wiking','1066-04-05','307');
+mysql> INSERT INTO postac VALUES('6','Cesti','wiking','1066-06-07','104'),('7','Afrikas','wiking','1066-08-09','357');
+mysql> INSERT INTO postac VALUES('8','Cymraeg','wiking','1066-12-07','670');
+
+2.
+CREATE TABLE statek(nazwa_statku VARCHAR(40) primary key,rodzaj statku enum('towarowy','pasazerski'),data wodowania date, max_ladownosc INTEGER UNSIGNED);
+
+
+3.
+mysql> INSERT INTO statek VALUES('Statek1','towarowy','1999-01-01','40');
+
+mysql>  INSERT INTO statek VALUES('Statek2','pasazerski','2000-01-01','56');
+
+4.mysql> ALTER TABLE postac ADD COLUMN funkcja VARCHAR(40);
+
+5.mysql> UPDATE postac SET funkcja='kapitan' WHERE id_postaci=1;
+
+6.mysql> ALTER TABLE postac ADD COLUMN nazwa_statku VARCHAR(40);
+mysql> ALTER TABLE postac ADD FOREIGN KEY (nazwa_statku) references statek(nazwa_statku);
+
+
+7.mysql> update postac SET nazwa_statku='Statek1' WHERE rodzaj='wiking';
+
+8.mysql> DELETE FROM izba WHERE nazwa_izby='spizarnia';
+
+9.mysql> DROP TABLE izba;
+
+
+LEKCJA 2
+
+zad 1
+a. mysql> DELETE FROM postac WHERE rodzaj = 'wiking' AND NOT nazwa='Bjorn' ORDER BY wiek DESC limit 2;
+b.
+mysql> ALTER TABLE postac ADD COLUMN pesel VARCHAR(11) Primary KEY;
+mysql> ALTER TABLE postac DROP Foreign key postac_ibfk_1;
+
+mysql> ALTER TABLE postac DROP PRIMARY KEY;
+
+zad 2
+a. mysql> ALTER TABLE postac ADD COLUMN pesel VARChAR(11) primary key;
+b. 
+mysql> ALTER TABLE postac MODIFY COLUMN rodzaj ENUM ('wiking','ptak','kobieta','syreny');
+c.
+mysql> INSERT INTO postac VALUES ('8','Gertruda Nieslawna','syreny','2002-10-05','20',NULL,NULL);
+
+
+zad 3
+a.
+mysql> UPDATE postac SET nazwa_statku = 'Statek1' WHERE nazwa LIKE '%a%';
+b.
+mysql> UPDATE statek SET max_ladownosc = max_ladownosc * 0.3 WHERE data_wodowania > '1999.01.01';
+c.
+mysql> select * from postac WHERE wiek < 1000;
+
+zad 4
+a.
+mysql> ALTER TABLE postac MODIFY COLUMN rodzaj ENUM ('wiking','ptak','kobieta','syreny','waz');
+
+mysql> INSERT INTO postac VALUES('9','Loko','waz','2022-10-01','1','NILL','NULL','NULL');
+b.
+mysql> CREATE TABLE Marynarz (id_postaci INT AUTO_INCREMENT PRIMARY KEY, nazwa VARCHAR(40), rodzaj VARCHAR(40), data_ur date, wiek int unsigned, funkcja VARCHAR(40), pesel VARCHAR(11),nazwa_statku VARCHAR(40));
+
+mysql> INSERT INTO Marynarz SELECT * FROM postac WHERE nazwa_statku = 'Statek1';
+
+zad 5.
+a.
+mysql> UPDATE Marynarz SET nazwa_statku = NULL;
+b.
+mysql> DELETE FROM Marynarz WHERE id_postaci = '5';
+c.
+d.
+mysql> DROP TABLE statek;
+e.
+mysql> CREATE TABLE zwierz(id INT AUTO_INCREMENT PRIMARY KEY, nazwa VARCHAR(40), wiek INTEGER);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
