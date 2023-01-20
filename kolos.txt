@@ -75,5 +75,49 @@ mysql> select year('2023-01-01') -  year(data_urodzenia) from pracownik;
 zad 3
 
 
+scilab:
+
+//cw 1
+M = %pi*ones(7,7)+(8-%pi)*eye(7,7)
+inv(M)
+det(M)
+
+//cw 2
+u = [1:100].^2
+v =[100:-1:1]
+u*v'
+
+//cw 3
+A = [%T %T %T %T %F %F %F %F]
+B = [%T %T %F %F %T %T %F %F]
+C = [%T %F %T %F %T %F %T %F]
+~(A&~B)
+A|B
+~((~A&B)|(A==C))
+(A|~B)&~(A==C)
+
+//cw 4
+s = 0
+for n=1:100
+    s=s+(n-1)/3^n;
+end
+s
+
+//cw 5
+clf
+x = [0:0.01:2];
+y = %e^x;
+z = log(x);
+
+plot(x,y,'g','LineWidth',3)
+plot(x,z,'r','LineWidth',3)
+xgrid
+xlabel('x')
+ylabel('$e^x, \log (x)$')
+
+title('$\mbox{Plot of }e^x \mbox{ and }\log(x)$')
+legend('$e^x$', '$\log (x)$',4)
+
+
 
 
